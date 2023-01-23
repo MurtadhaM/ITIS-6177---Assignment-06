@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Request</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
+</head>
+<style>
+    .posts span{
+        font-size: 20px;
+        background-color: #e30000;        
+
+    }
+    .posts{
+        width: 50%;
+        margin: 0 auto;
+    }
+    li{
+        list-style: none;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #e30000;
+        border-radius: 5px;
+        font-size: 20px;
+    }
+    ul{
+        padding: 0;
+    }
+</style>
+<body>
+    
+    <!--Title and Author Form --><div class="container">
+  <h2 style="text-align: center;">My Posts</h2>
+  <div class="form-horizontal" >
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="title">Title:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="title" placeholder="Enter Title" name="title">
+      </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="author">Author:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="author" placeholder="Enter author" name="author">
+        </div>
+      </div>
+
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-danger" style="width:100%">Submit</button>
+      </div>
+    </div>
+</div>
+</div>
+
+
+    <!--All posts-->
+    
+    
+    <div class="posts">
+        <ul >
+            
+        </ul>
+    </div>
+
+    <!--Script-->
+
+    <script>
+        $(document).ready(function(){
+            //Get all posts
+            $.ajax({
+                url: 'http://localhost:3000/posts',
+                type: 'GET',
+                success: function(data){
+                    console.log(data);
+                    for(var i = 0; i < data.length; i++){
+                         
+                        // Add A List Item
+                        $('.posts ul').append('<li class="list-group-item d-flex justify-content-between align-items-center">' + data[i].title + ' <span class="badge badge-primary badge-pill">' + data[i].author + '</span> </li>');
+                    }
+                }
+            });
+
+            
+
+            //Add new post
+            $('button').click(function(){
+                var title = $('#title').val();
+                var author = $('#author').val();
+                $('.posts ul').append('<li class="list-group-item d-flex justify-content-between align-items-center">' + title + ' <span class="badge badge-primary badge-pill">' + author + '</span> </li>');
+                $.ajax({
+                    url: 'http://localhost:3000/posts',
+                    type: 'POST',
+                    data: {
+                        title: title,
+                        author: author
+                    },
+
+                });
+            });
+        });
+    </script>
+
+
+
+</body>
+</html>
