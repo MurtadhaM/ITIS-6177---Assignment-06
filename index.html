@@ -9,19 +9,17 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js" integrity="sha512-L4lHq2JI/GoKsERT8KYa72iCwfSrKYWEyaBxzJeeITM9Lub5vlTj8tufqYk056exhjo2QDEipJrg6zen/DDtoQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <style>
     .posts span{
         font-size: 20px;
-        background-color: #e30000;        
 
     }
     .posts{
-        width: 50%;
         margin: 0 auto;
     }
-    li{
+    .author{
         list-style: none;
         margin: 10px;
         padding: 10px;
@@ -31,7 +29,35 @@
     }
     ul{
         padding: 0;
+
     }
+    li{
+        margin-left: 20%;
+        margin-right: 20%;
+    
+    }
+    li span{
+        display: inline-block;
+        text-align: center;
+        
+        
+    }
+    span:nth-child(1){
+        display: inline-block;
+    }
+       
+    
+
+li    .btn{
+            border-radius: 5px;
+            float : right !important;
+            border: 1px solid black !important;
+            width: 20%;
+            margin-top: 2vh;
+            margin-right: 5vh;
+            
+    }
+
 </style>
 <body>
     
@@ -64,7 +90,7 @@
     
     
     <div class="posts">
-        <ul >
+        <ul class="list-group">
             
         </ul>
     </div>
@@ -82,7 +108,7 @@
                     for(var i = 0; i < data.length; i++){
                          
                         // Add A List Item
-                        $('.posts ul').append('<li class="list-group-item d-flex justify-content-between align-items-center">' + data[i].title + ' <span class="badge badge-primary badge-pill">' + data[i].author + '</span> </li>');
+                        $('.posts ul').append('<li id='+ `"${data[i].id}"` + 'class="list-group-item "> <span class="author">'  + data[i].title + '</span> <span class="author">' + data[i].author + '</span><button   type="button" class="btn">Danger</button>  </li>');
                     }
                 }
             });
@@ -93,7 +119,13 @@
             $('button').click(function(){
                 var title = $('#title').val();
                 var author = $('#author').val();
-                $('.posts ul').append('<li class="list-group-item d-flex justify-content-between align-items-center">' + title + ' <span class="badge badge-primary badge-pill">' + author + '</span> </li>');
+                var id = $(this).parent().attr('id'); 
+                // If the content is empty, don't add the post
+                if(title == '' || author == ''){
+                   alert('Please fill in the form');
+                    return;
+                }
+                $('.posts ul').append('<li id='+ `"${id}"` + 'class="list-group-item "> <span class="author">'  +title + '</span> <span class="author">' + author + '</span><button   type="button" class="btn">Danger</button>  </li>');
                 $.ajax({
                     url: 'http://localhost:3000/posts',
                     type: 'POST',
@@ -104,7 +136,32 @@
 
                 });
             });
+
+     
+            //Delete post
+            $('.posts ul').on('click', 'button', function(){
+                // Get the id of the post
+                let id = $(this).parent().attr('id'); 
+
+                // Make a delete request with axios
+                axios.delete('http://localhost:3000/posts/' + id)
+                    .then(function(response){
+                        console.log(response);
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    });
+
+                    // Remove the post from the DOM
+                    $(this).parent().remove();
+
+            });
+
+            
+        
         });
+
+    
     </script>
 
 
