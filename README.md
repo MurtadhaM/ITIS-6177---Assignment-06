@@ -9,8 +9,7 @@
 -  This Repo is for the Systems Integration Class.
 
 
-|<img src="https://assets.pngwing.com/public/css/checkmark.svg" width="40%">      |   <img src="https://icon-library.com/images/icon-for-technology/icon-for-technology-10.jpg" width="40%">    |
-
+<img src="demo.png" width="100%">    
 
 ## Sreenshots of the Application
 
