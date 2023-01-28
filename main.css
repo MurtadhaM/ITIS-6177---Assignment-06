@@ -45,32 +45,4 @@ li    .btn{
             
     }
 
-    .title{
-        margin: 0 auto;
-        text-align: center;
-        border: 1px solid black;
-        border-radius: 5px;
-        margin: 10px;
-        padding: 10px;
-        font-size: 20px;
-        margin-left: 20%;
-        background-color: #e30020;
-        color: white !important;
-        margin-right: 20%;
-        
-    }
-    .form-horizontal{
-        margin: 0 auto;
-        margin-top: 10vh;
-        margin-bottom: 10vh;
-        width: 50%;
-        border: 1px solid black;
-        border-radius: 5px;
-        padding: 10px;
-        background-color: #ffffff;
-        color: rgb(48, 0, 0) !important;
-    }
-
-    .form-horizontal{
-        margin-bottom: 0px !important;
-    }
+  
